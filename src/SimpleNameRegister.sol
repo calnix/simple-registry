@@ -7,20 +7,20 @@ contract SimpleNameRegister {
     mapping (string => address) public holder;    
 
     // emit event when name is registered or relinquished
-    event NameRegistered(address indexed owner, string indexed name);
-    event NameRelinquished(address indexed owner, string indexed name);
+    event Register(address indexed owner, string indexed name);
+    event Release(address indexed owner, string indexed name);
 
     // register an available name
-    function registerName(string memory _name) public {
-        require(nameOwner[_name] == address(0), "The provided name has already been registered!");
-        nameOwner[_name] = msg.sender;
-        emit NameRegistered(msg.sender, _name);
+    function register(string memory name) public {
+        require(nameOwner[name] == address(0), "Already registered!");
+        holder[name] = msg.sender;
+        emit Register(msg.sender, name);
     }
 
-    //owner can relinquish a name that they own
-    function relinquishName(string memory _name) public {
-        require(nameOwner[_name] == msg.sender, "The provided name does not belong to you!");
-        nameOwner[_name] = address(0);
-        emit NameRelinquished(msg.sender, _name);
+    // owner can release a name that they own
+    function release(string memory name) public {
+        require(nameOwner[name] == msg.sender, "Invalid name!");
+        holder[name] = address(0);
+        emit Release(msg.sender, name);
     }
 }
