@@ -4,9 +4,6 @@ pragma solidity ^0.8.13;
 import "ds-test/test.sol";
 import 'src/SimpleNameRegister.sol';
 
-import "forge-std/Test.sol";
-import {console2} from "forge-std/console2.sol";
-
 interface CheatCodes {
     function prank(address) external;
     function expectRevert(bytes calldata) external;
