@@ -12,14 +12,14 @@ contract SimpleNameRegister {
 
     // register an available name
     function register(string memory name) public {
-        require(nameOwner[name] == address(0), "Already registered!");
+        require(holder[name] == address(0), "Already registered!");
         holder[name] = msg.sender;
         emit Register(msg.sender, name);
     }
 
     // owner can release a name that they own
     function release(string memory name) public {
-        require(nameOwner[name] == msg.sender, "Invalid name!");
+        require(holder[name] == msg.sender, "Invalid name!");
         holder[name] = address(0);
         emit Release(msg.sender, name);
     }
