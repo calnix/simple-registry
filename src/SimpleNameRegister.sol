@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 contract SimpleNameRegister {
     
     // map a string to an address to identify current owner
-    mapping (string => address) public nameOwner;    
+    mapping (string => address) public holder;    
 
     // emit event when name is registered or relinquished
     event NameRegistered(address indexed owner, string indexed name);
