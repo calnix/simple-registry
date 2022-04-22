@@ -1,26 +1,28 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
+///@title An on-chain name registry
+///@author Calnix
 contract SimpleNameRegister {
     
-    // map a string to an address to identify current owner
-    mapping (string => address) public nameOwner;    
+    /// @notice map a name to an address to identify current holder 
+    mapping (string => address) public holder;    
 
-    // emit event when name is registered or relinquished
-    event NameRegistered(address indexed owner, string indexed name);
-    event NameRelinquished(address indexed owner, string indexed name);
+    /// @notice emit an event when a name is registered or released
+    event Register(address indexed owner, string indexed name);
+    event Release(address indexed owner, string indexed name);
 
-    // register an available name
-    function registerName(string memory _name) public {
-        require(nameOwner[_name] == address(0), "The provided name has already been registered!");
-        nameOwner[_name] = msg.sender;
-        emit NameRegistered(msg.sender, _name);
+    /// @notice user can register an available name
+    function register(string memory name) public {
+        require(holder[name] == address(0), "Already registered!");
+        holder[name] = msg.sender;
+        emit Register(msg.sender, name);
     }
 
-    //owner can relinquish a name that they own
-    function relinquishName(string memory _name) public {
-        require(nameOwner[_name] == msg.sender, "The provided name does not belong to you!");
-        nameOwner[_name] = address(0);
-        emit NameRelinquished(msg.sender, _name);
+    /// @notice holder can release a name, making it available
+    function release(string memory name) public {
+        require(holder[name] == msg.sender, "Not your name!");
+        delete holder[name];
+        emit Release(msg.sender, name);
     }
 }
