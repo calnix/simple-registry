@@ -9,8 +9,8 @@ contract SimpleNameRegister {
     mapping (string => address) public holder;    
 
     /// @notice emit an event when a name is registered or released
-    event Register(address indexed owner, string indexed name);
-    event Release(address indexed owner, string indexed name);
+    event Register(address indexed owner, string name);
+    event Release(address indexed owner, string name);
 
     /// @notice user can register an available name
     function register(string memory name) public {
