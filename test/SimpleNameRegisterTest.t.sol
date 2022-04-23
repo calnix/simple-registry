@@ -11,7 +11,7 @@ interface CheatCodes {
     function stopPrank() external;
 }
 
-contract StateZero is DSTest {
+abstract contract StateZero is DSTest {
     SimpleNameRegister public simpleNameRegister;
     CheatCodes cheats;
     
@@ -19,6 +19,9 @@ contract StateZero is DSTest {
         simpleNameRegister = new SimpleNameRegister();
         cheats = CheatCodes(HEVM_ADDRESS);
     }
+}
+
+contract StateZeroTest is StateZero {
 
     function testCannotRelease(string memory testString) public {  
         cheats.expectRevert(bytes("Not your name!"));
@@ -32,7 +35,7 @@ contract StateZero is DSTest {
     }
 }
 
-contract StateRegistered is StateZero {
+abstract contract StateRegistered is StateZero {
     address adversary;
     string name;
 
@@ -44,6 +47,9 @@ contract StateRegistered is StateZero {
         name = 'whale';
         simpleNameRegister.register(name);
     }
+}
+
+contract StateRegisteredTest is StateRegistered {
 
     function testAdversaryCannotRegisterName() public {
         cheats.startPrank(adversary);
