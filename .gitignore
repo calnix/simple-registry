@@ -1,2 +1,5 @@
 cache/
 out/
+.env
+test/oldTest.text
+test/compareTest.text
