@@ -19,7 +19,7 @@ contract SimpleNameRegister {
 
     /// @notice User can register an available name
     /// @param name The string to register
-    function register(string calldata name) public {
+    function register(string calldata name) external {
         require(holder[name] == address(0), "Already registered!");
         holder[name] = msg.sender;
         emit Register(msg.sender, name);
@@ -27,7 +27,7 @@ contract SimpleNameRegister {
 
     /// @notice Holder can release a name, making it available
     /// @param name The string to release
-    function release(string calldata name) public {
+    function release(string calldata name) external {
         require(holder[name] == msg.sender, "Not your name!");
         delete holder[name];
         emit Release(msg.sender, name);
